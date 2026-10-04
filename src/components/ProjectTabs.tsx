@@ -1,5 +1,5 @@
 import { useRef, useState, type KeyboardEvent } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowUpRight, Globe, LockSimple } from "@phosphor-icons/react";
 import { frameworks, projects, type Project } from "../data";
 import { DemoVideo } from "./DemoVideo";
@@ -55,7 +55,7 @@ function ProjectRow({ project }: { project: Project }) {
             </li>
           ))}
         </ul>
-        {project.demo && <DemoVideo title={project.name} shareUrl={project.demo} />}
+        {project.demo && <DemoVideo title={project.name} shareUrl={project.demo} poster={project.demoPoster} />}
       </div>
     </li>
   );
@@ -75,8 +75,6 @@ export function ProjectTabs() {
     setActive(frameworks[next]);
     tabRefs.current[frameworks[next]]?.focus();
   };
-
-  const visible = projects.filter((p) => p.framework === active);
 
   return (
     <section id="work" className="mx-auto max-w-7xl px-5 py-28 md:px-10">
@@ -103,7 +101,7 @@ export function ProjectTabs() {
                 role="tab"
                 id={`tab-${fw}`}
                 aria-selected={selected}
-                aria-controls="project-panel"
+                aria-controls={`panel-${fw}`}
                 tabIndex={selected ? 0 : -1}
                 onClick={() => setActive(fw)}
                 className={`relative flex shrink-0 items-baseline justify-between gap-6 rounded-lg px-4 py-3 text-left transition active:scale-[0.98] md:py-4 ${
@@ -124,26 +122,23 @@ export function ProjectTabs() {
           })}
         </div>
 
-        <div
-          role="tabpanel"
-          id="project-panel"
-          aria-labelledby={`tab-${active}`}
-          className="md:col-span-9 md:border-l md:border-white/10 md:pl-10"
-        >
-          <AnimatePresence mode="wait">
-            <motion.ul
-              key={active}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ type: "spring", stiffness: 100, damping: 20 }}
-              className="divide-y divide-white/10"
+        <div className="md:col-span-9 md:border-l md:border-white/10 md:pl-10">
+          {frameworks.map((fw) => (
+            <ul
+              key={fw}
+              role="tabpanel"
+              id={`panel-${fw}`}
+              aria-labelledby={`tab-${fw}`}
+              hidden={fw !== active}
+              className="panel-enter divide-y divide-white/10"
             >
-              {visible.map((p) => (
-                <ProjectRow key={p.id} project={p} />
-              ))}
-            </motion.ul>
-          </AnimatePresence>
+              {projects
+                .filter((p) => p.framework === fw)
+                .map((p) => (
+                  <ProjectRow key={p.id} project={p} />
+                ))}
+            </ul>
+          ))}
         </div>
       </div>
     </section>

@@ -13,6 +13,7 @@ export interface Project {
   github: string;
   privateNote?: string;
   demo?: string;
+  demoPoster?: string;
   live?: string;
   framework: string;
 }
@@ -27,6 +28,7 @@ export const projects: Project[] = [
     proof: "Per-turn latency cut from ~8s to under 3s. 370+ tests, including attack-string suites.",
     stack: ["Claude Agent SDK", "Vapi", "MCP", "Supabase", "Postgres"],
     demo: "https://www.loom.com/share/03c275eef53442789b638e4c4c2a609e",
+    demoPoster: "https://cdn.loom.com/sessions/thumbnails/03c275eef53442789b638e4c4c2a609e-e753bdb9e54d667b.gif",
     live: "https://voice-support-assistant-5osb.onrender.com/",
     github: "https://github.com/JesseAltraide/Voice-Support-Assistant",
     framework: "Claude Agent SDK",
@@ -62,6 +64,7 @@ export const projects: Project[] = [
     proof: "Claude flagged a real attrition spike by comparing three reporting windows in one call.",
     stack: ["n8n", "Supabase", "Claude API"],
     demo: "https://www.loom.com/share/40fab3656ee94c02bdfcab169194a6a6",
+    demoPoster: "https://cdn.loom.com/sessions/thumbnails/40fab3656ee94c02bdfcab169194a6a6-4c2572ec7411ce02.gif",
     github: "https://github.com/JesseAltraide/Reporting-pipeline",
     framework: "n8n",
   },
